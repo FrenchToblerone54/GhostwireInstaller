@@ -17,18 +17,18 @@ GhostWire is a reverse tunnel that lets people inside Iran access the internet f
 - **Iran Server** — listens on local ports, accepts the tunnel connection from the abroad client
 - **Abroad Client** — connects TO the Iran server, forwards traffic to the open internet
 
-The key insight: Iran blocks *outbound* connections to foreign servers, but it can still *receive inbound* connections. The abroad client connects inbound to Iran, creating the tunnel.
+The key insight: Iran blocks _outbound_ connections to foreign servers, but it can still _receive inbound_ connections. The abroad client connects inbound to Iran, creating the tunnel.
 
 ---
 
 ## Requirements
 
-| | Iran Server | Abroad Client |
-|---|---|---|
-| **Location** | VPS inside Iran with public IP | VPS outside Iran (Netherlands, Germany, USA, etc.) |
-| **OS** | Linux x86\_64 (Ubuntu 22.04+) | Linux x86\_64 (Ubuntu 22.04+) |
-| **Access** | `sudo` / root | `sudo` / root |
-| **Optional** | A domain name + Cloudflare for better reliability | — |
+|              | Iran Server                                       | Abroad Client                                      |
+| ------------ | ------------------------------------------------- | -------------------------------------------------- |
+| **Location** | VPS inside Iran with public IP                    | VPS outside Iran (Netherlands, Germany, USA, etc.) |
+| **OS**       | Linux x86_64 (Ubuntu 22.04+)                      | Linux x86_64 (Ubuntu 22.04+)                       |
+| **Access**   | `sudo` / root                                     | `sudo` / root                                      |
+| **Optional** | A domain name + Cloudflare for better reliability | —                                                  |
 
 ---
 
@@ -37,7 +37,7 @@ The key insight: Iran blocks *outbound* connections to foreign servers, but it c
 ### Step 1 — On your Iran server
 
 ```bash
-wget https://raw.githubusercontent.com/FrenchToblerone54/GhostwireInstaller/main/setup.sh
+wget https://raw.githubusercontent.com/FrenchToblerone54/GhostwireInstaller/main/setup.sh -O setup.sh
 chmod +x setup.sh
 sudo ./setup.sh
 ```
@@ -56,7 +56,7 @@ The script detects your location, confirms you want **Iran Server** mode, then w
 ### Step 2 — On your abroad server (Netherlands, Germany, USA, etc.)
 
 ```bash
-wget https://raw.githubusercontent.com/FrenchToblerone54/GhostwireInstaller/main/setup.sh
+wget https://raw.githubusercontent.com/FrenchToblerone54/GhostwireInstaller/main/setup.sh -O setup.sh
 chmod +x setup.sh
 sudo ./setup.sh
 ```
@@ -71,13 +71,13 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 
 ## What the Installer Asks (Iran Server)
 
-| Question | Default | Explanation |
-|---|---|---|
-| WebSocket host | `127.0.0.1` | Use `127.0.0.1` if using nginx (recommended). Use `0.0.0.0` for direct connections. |
-| WebSocket port | `8443` | Port the abroad client connects to |
-| Port mappings | `8080=80,8443=443` | `IRAN_PORT=INTERNET_PORT` — traffic arriving on IRAN_PORT is forwarded to INTERNET_PORT on the abroad side |
-| Auto-update | `Y` | GhostWire checks GitHub for updates and restarts itself |
-| Web panel | `Y` | Browser-based dashboard for monitoring and control |
+| Question       | Default            | Explanation                                                                                                |
+| -------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| WebSocket host | `127.0.0.1`        | Use `127.0.0.1` if using nginx (recommended). Use `0.0.0.0` for direct connections.                        |
+| WebSocket port | `8443`             | Port the abroad client connects to                                                                         |
+| Port mappings  | `8080=80,8443=443` | `IRAN_PORT=INTERNET_PORT` — traffic arriving on IRAN_PORT is forwarded to INTERNET_PORT on the abroad side |
+| Auto-update    | `Y`                | GhostWire checks GitHub for updates and restarts itself                                                    |
+| Web panel      | `Y`                | Browser-based dashboard for monitoring and control                                                         |
 
 **Port mapping examples:**
 
@@ -92,11 +92,11 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 
 ## What the Installer Asks (Abroad Client)
 
-| Question | Explanation |
-|---|---|
-| Server URL | URL of your Iran server, e.g. `wss://tunnel.example.com/ws` or `ws://1.2.3.4:8443/ws` |
-| Token | The token saved from the Iran server installation |
-| Auto-update | Same as server — recommended to keep enabled |
+| Question    | Explanation                                                                           |
+| ----------- | ------------------------------------------------------------------------------------- |
+| Server URL  | URL of your Iran server, e.g. `wss://tunnel.example.com/ws` or `ws://1.2.3.4:8443/ws` |
+| Token       | The token saved from the Iran server installation                                     |
+| Auto-update | Same as server — recommended to keep enabled                                          |
 
 ---
 
@@ -105,6 +105,7 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 ### Useful commands
 
 **Iran Server:**
+
 ```bash
 sudo systemctl status ghostwire-server
 sudo systemctl restart ghostwire-server
@@ -113,6 +114,7 @@ sudo ghostwire-server update
 ```
 
 **Abroad Client:**
+
 ```bash
 sudo systemctl status ghostwire-client
 sudo systemctl restart ghostwire-client
@@ -126,6 +128,7 @@ sudo ghostwire-client update
 - Abroad client: `/etc/ghostwire/client.toml`
 
 To retrieve your token later:
+
 ```bash
 grep token /etc/ghostwire/server.toml
 ```
@@ -142,6 +145,7 @@ If you use Cloudflare in front of your Iran server domain:
 - **Speed → Auto Minify**: Disable all
 
 On the abroad client, edit `/etc/ghostwire/client.toml` and set:
+
 ```toml
 [cloudflare]
 enabled=true
