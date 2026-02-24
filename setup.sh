@@ -58,11 +58,11 @@ p_token_box() {
     local token="$1"
     echo ""
     echo -e "  ${YELLOW}${BOLD}╔══════════════════════════════════════════════════════════╗${NC}"
-    echo -e "  ${YELLOW}${BOLD}║  🔑  TOKEN - IN RO SAVE KON! (Save this!)               ║${NC}"
+    echo -e "  ${YELLOW}${BOLD}║  🔑  TOKEN - INO SAVE KON! (Save this!)                 ║${NC}"
     echo -e "  ${YELLOW}${BOLD}║                                                          ║${NC}"
     echo -e "  ${YELLOW}${BOLD}║  ${NC}${BOLD}${token}${NC}${YELLOW}${BOLD}  ║${NC}"
     echo -e "  ${YELLOW}${BOLD}║                                                          ║${NC}"
-    echo -e "  ${YELLOW}${BOLD}║  ⚠  Baraye Client (Kharej server) lazem dari!           ║${NC}"
+    echo -e "  ${YELLOW}${BOLD}║  ⚠  Baraye Client (Kharej) lazemesh dari!               ║${NC}"
     echo -e "  ${YELLOW}${BOLD}╚══════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -88,7 +88,7 @@ check_prerequisites() {
     fi
     p_ok "Root access: OK"
     if [ "$(uname -m)" != "x86_64" ]; then
-        p_err "Faqat x86_64 (64-bit) support mishe! Nur x86_64 unterstützt."
+        p_err "Faqat x86_64 (64-bit) support mishe! (Only x86_64 is supported.)"
         exit 1
     fi
     p_ok "CPU: x86_64 - OK"
@@ -162,7 +162,7 @@ ask_location() {
     echo -e "       ${DIM}GhostWire inja nasb mishe va dar-e varoodi ro baz negah midare${NC}"
     echo ""
     echo -e "  ${GREEN}${BOLD}2)${NC}  🌍  ${GREEN}${BOLD}Kharej Client (Abroad)${NC}"
-    echo -e "       ${DIM}Server birun az Iran - be Iran vasl mishe, internet ro forwart mikone${NC}"
+    echo -e "       ${DIM}Server birun az Iran - be Iran vasl mishe, internet ro forward mikone${NC}"
     echo -e "       ${DIM}GhostWire inja nasb mishe va traffic ro be internet miresone${NC}"
     echo ""
     local default_num="1"
@@ -272,8 +272,8 @@ configure_server() {
     p_info "Misali: 8000-8100=80  =>  Port range forwarding"
     p_info "Misali: 9000=1.2.3.4:443  =>  Be yek IP-e khas forward kone"
     echo ""
-    p_info "Agar proxy (like V2Ray, Xray) daridal kharej:"
-    p_info "  Oon proxy-e kharej port X ro listen mikone"
+    p_info "Agar proxy (like V2Ray, Xray) dar kharej dari:"
+    p_info "  oon proxy-e kharej port X ro listen mikone"
     p_info "  Inja bezan: 443=X  (Iran 443 → kharej port X)"
     echo ""
     local tunnel_input=""
@@ -282,7 +282,7 @@ configure_server() {
         read -r tunnel_input
         tunnel_input="${tunnel_input:-8080=80,8443=443}"
         [ -n "$tunnel_input" ] && break
-        p_err "In ghole lazem-e!"
+        p_err "In ghesmat lazem-e!"
     done
     IFS="," read -ra TUNNELS <<< "$tunnel_input"
     TUNNELS=("${TUNNELS[@]// /}")
@@ -304,7 +304,7 @@ configure_server() {
     echo ""
     echo -e "  ${BLUE}${BOLD}4. Web Panel - Pane-le Modiriyat${NC}"
     p_info "Yek interface grafiki baraye monitoring, log va control-e service."
-    p_info "Amniyat: Faghat az localhost qabl dashreset (baraye nginx proxy)."
+    p_info "Amniyat: Faghat az localhost qabel-e dastres ast (baraye nginx proxy)."
     p_ask "Panel ro faal koni? [Y/n]: "
     read -r ENABLE_PANEL
     ENABLE_PANEL="${ENABLE_PANEL:-y}"
@@ -544,9 +544,9 @@ install_server() {
     echo ""
     echo -e "  ${BLUE}${BOLD}🇮🇷  Iran Server Mode${NC}"
     echo ""
-    p_info "In server DARUN-E IRAN nasb mishe."
-    p_info "Vazife: Port-haye local ro listen kone va traffic ro az tunel forwart kone."
-    p_info "Kharej (client) az kharej be IN server vasl mishe."
+    p_info "In server darun-e Iran nasb mishe."
+    p_info "Vazife: Port-haye local ro listen kone va traffic ro az tunel forward kone."
+    p_info "Kharej (client) az birun be in server vasl mishe."
     echo ""
     p_sep
     p_step "Gam 1: Daryaft va Nasb-e Binary (Step 1: Download & Install)"
@@ -618,7 +618,7 @@ configure_client() {
     p_sep
     echo ""
     echo -e "  ${GREEN}${BOLD}2. Token-e Amniyati${NC}"
-    p_info "Hamoon token-i ke dar Iran server nasb kardin."
+    p_info "Hamoon token-i ke dar Iran server nasb kardim."
     p_info "Agar yad dari, az server-e Iran copy kon:"
     p_info "  grep token /etc/ghostwire/server.toml"
     echo ""
@@ -696,7 +696,7 @@ install_client() {
     echo -e "  ${GREEN}${BOLD}🌍  Kharej Client Mode${NC}"
     echo ""
     p_info "In client BIRUN AZ IRAN nasb mishe."
-    p_info "Vazife: Be server-e Iran vasl she, traffic-e Iran ro be internet brigardone."
+    p_info "Vazife: Be server-e Iran vasl she, traffic-e Iran ro be internet bar gardoone."
     p_info "Client khodesh vasl mishe - Iran block nemikone chon inbound-e."
     echo ""
     p_sep
@@ -732,7 +732,7 @@ install_client() {
     echo -e "  ${GREEN}ℹ${NC}  Boro sar yek mashine darun-e Iran"
     echo -e "  ${GREEN}ℹ${NC}  Ports-haye tanimsaz-shode (masalan 8080, 8443) ro test kon"
     echo -e "  ${GREEN}ℹ${NC}    curl -v http://IRAN_SERVER_IP:8080"
-    echo -e "  ${GREEN}ℹ${NC}  Agar tunel kar mikone, traffic ba internet-e kharej javoqb mide"
+    echo -e "  ${GREEN}ℹ${NC}  Agar tunel kar mikone, traffic ba internet-e kharej javab mide"
     echo ""
     p_warn "Agar Cloudflare dari: dar /etc/ghostwire/client.toml"
     p_warn "  cloudflare enabled=true set kon baraye paydari bishtar"
