@@ -147,21 +147,21 @@ ask_location() {
     p_step "Server shoma kojast? (Where is your server?)"
     p_sep
     if [ "$detected" = "IR" ]; then
-        p_info "IP-e shoma az IRAN detect shod. 🇮🇷"
-        p_info "Pishnahad: Iran Server (Server Mode)"
+        echo -e "  ${BLUE}ℹ${NC}  IP-e shoma az ${BLUE}${BOLD}IRAN${NC} detect shod. 🇮🇷"
+        echo -e "  ${BLUE}ℹ${NC}  Pishnahad: ${BLUE}${BOLD}Iran Server (Server Mode)${NC}"
     else
-        p_info "IP-e shoma az kharej detect shod. 🌍 (Country: ${detected})"
-        p_info "Pishnahad: Kharej Client (Client Mode)"
+        echo -e "  ${GREEN}ℹ${NC}  IP-e shoma az ${GREEN}${BOLD}Kharej${NC} detect shod. 🌍 (Country: ${detected})"
+        echo -e "  ${GREEN}ℹ${NC}  Pishnahad: ${GREEN}${BOLD}Kharej Client (Client Mode)${NC}"
     fi
     p_sep
     echo ""
     echo -e "  ${BOLD}Lotfan entekhab konid (Please choose):${NC}"
     echo ""
-    echo -e "  ${GREEN}${BOLD}1)${NC}  🇮🇷  Iran Server"
+    echo -e "  ${BLUE}${BOLD}1)${NC}  🇮🇷  ${BLUE}${BOLD}Iran Server${NC}"
     echo -e "       ${DIM}Server darun-e Iran - port-ha ro listen mikone${NC}"
     echo -e "       ${DIM}GhostWire inja nasb mishe va dar-e varoodi ro baz negah midare${NC}"
     echo ""
-    echo -e "  ${CYAN}${BOLD}2)${NC}  🌍  Kharej Client (Abroad)"
+    echo -e "  ${GREEN}${BOLD}2)${NC}  🌍  ${GREEN}${BOLD}Kharej Client (Abroad)${NC}"
     echo -e "       ${DIM}Server birun az Iran - be Iran vasl mishe, internet ro forwart mikone${NC}"
     echo -e "       ${DIM}GhostWire inja nasb mishe va traffic ro be internet miresone${NC}"
     echo ""
@@ -180,9 +180,9 @@ ask_location() {
     done
     echo ""
     if [ "$INSTALL_MODE" = "IRAN" ]; then
-        p_ok "Mode: Iran Server - nasb mikonim... 🇮🇷"
+        echo -e "  ${BLUE}✓${NC}  Mode: ${BLUE}${BOLD}Iran Server${NC} - nasb mikonim... 🇮🇷"
     else
-        p_ok "Mode: Kharej Client - nasb mikonim... 🌍"
+        echo -e "  ${GREEN}✓${NC}  Mode: ${GREEN}${BOLD}Kharej Client${NC} - nasb mikonim... 🌍"
     fi
 }
 
@@ -252,7 +252,7 @@ configure_server() {
     token=$(/usr/local/bin/ghostwire-server --generate-token)
     echo ""
     p_sep
-    echo -e "  ${BOLD}1. WebSocket Port - Dar-e Varoodi${NC}"
+    echo -e "  ${BLUE}${BOLD}1. WebSocket Port - Dar-e Varoodi${NC}"
     p_info "Kharej server az in port be Iran vasl mishe."
     p_info "Agar nginx doshti: host = 127.0.0.1 (default, amniyat bishtar)"
     p_info "Agar nginx nadori: host = 0.0.0.0 (direct connection)"
@@ -266,7 +266,7 @@ configure_server() {
     p_ok "WebSocket: ${WS_HOST}:${WS_PORT}"
     p_sep
     echo ""
-    echo -e "  ${BOLD}2. Port Mapping - Che Port-hai Forward Beshe?${NC}"
+    echo -e "  ${BLUE}${BOLD}2. Port Mapping - Che Port-hai Forward Beshe?${NC}"
     p_info "Misali: 8080=80   =>  Iran:8080 traffic ro be internet port 80 miresone"
     p_info "Misali: 8443=443  =>  Iran:8443 traffic ro be internet port 443 miresone"
     p_info "Misali: 8000-8100=80  =>  Port range forwarding"
@@ -288,7 +288,7 @@ configure_server() {
     TUNNELS=("${TUNNELS[@]// /}")
     p_sep
     echo ""
-    echo -e "  ${BOLD}3. Auto-Update - Be-roozresani Khودkar${NC}"
+    echo -e "  ${BLUE}${BOLD}3. Auto-Update - Be-roozresani Khodkar${NC}"
     p_info "GhostWire az GitHub jadid-tarinha ro check mikone va khodesh update mishe."
     p_ask "Auto-update ro faal koni? [Y/n]: "
     read -r AUTO_UPDATE
@@ -302,7 +302,7 @@ configure_server() {
     fi
     p_sep
     echo ""
-    echo -e "  ${BOLD}4. Web Panel - Pane-le Modiriyat${NC}"
+    echo -e "  ${BLUE}${BOLD}4. Web Panel - Pane-le Modiriyat${NC}"
     p_info "Yek interface grafiki baraye monitoring, log va control-e service."
     p_info "Amniyat: Faghat az localhost qabl dashreset (baraye nginx proxy)."
     p_ask "Panel ro faal koni? [Y/n]: "
@@ -336,7 +336,7 @@ threads=4"
     TUNNEL_ARRAY="[${TUNNEL_ARRAY:1}]"
     p_sep
     echo ""
-    echo -e "  ${BOLD}Kholaseh-ye Config (Summary):${NC}"
+    echo -e "  ${BLUE}${BOLD}Kholaseh-ye Config (Summary):${NC}"
     p_info "WebSocket: ${WS_HOST}:${WS_PORT}"
     p_info "Tunnels: ${TUNNEL_ARRAY}"
     p_info "Auto-update: ${AUTO_UPDATE}"
@@ -542,7 +542,7 @@ EOF
 install_server() {
     p_sep
     echo ""
-    echo -e "  ${GREEN}${BOLD}🇮🇷  Iran Server Mode${NC}"
+    echo -e "  ${BLUE}${BOLD}🇮🇷  Iran Server Mode${NC}"
     echo ""
     p_info "In server DARUN-E IRAN nasb mishe."
     p_info "Vazife: Port-haye local ro listen kone va traffic ro az tunel forwart kone."
@@ -564,30 +564,30 @@ install_server() {
     p_step "Nasb Tamam Shod! (Installation Complete!) 🎉"
     p_sep
     echo ""
-    echo -e "  ${GREEN}${BOLD}✓  GhostWire Server dar Iran nasb shod!${NC}"
+    echo -e "  ${BLUE}${BOLD}✓  GhostWire Server dar Iran nasb shod!${NC}"
     echo ""
-    p_info "Config: /etc/ghostwire/server.toml"
-    p_info "Log file: /var/log/ghostwire-server.log"
+    echo -e "  ${BLUE}ℹ${NC}  Config: /etc/ghostwire/server.toml"
+    echo -e "  ${BLUE}ℹ${NC}  Log file: /var/log/ghostwire-server.log"
     echo ""
-    echo -e "  ${BOLD}Dastorat (Useful Commands):${NC}"
+    echo -e "  ${BLUE}${BOLD}Dastorat (Useful Commands):${NC}"
     echo ""
-    echo -e "  ${CYAN}sudo systemctl status ghostwire-server${NC}   - Status check"
-    echo -e "  ${CYAN}sudo systemctl restart ghostwire-server${NC}  - Restart kone"
-    echo -e "  ${CYAN}sudo systemctl stop ghostwire-server${NC}     - Stop kone"
-    echo -e "  ${CYAN}sudo journalctl -u ghostwire-server -f${NC}   - Live log"
-    echo -e "  ${CYAN}sudo ghostwire-server update${NC}             - Manual update"
+    echo -e "  ${BLUE}sudo systemctl status ghostwire-server${NC}   - Status check"
+    echo -e "  ${BLUE}sudo systemctl restart ghostwire-server${NC}  - Restart kone"
+    echo -e "  ${BLUE}sudo systemctl stop ghostwire-server${NC}     - Stop kone"
+    echo -e "  ${BLUE}sudo journalctl -u ghostwire-server -f${NC}   - Live log"
+    echo -e "  ${BLUE}sudo ghostwire-server update${NC}             - Manual update"
     echo ""
-    p_warn "Farامosh Nakoni: Token ro ke bala neshon dade shod, save kon!"
+    p_warn "Faramosh Nakoni: Token ro ke bala neshon dade shod, save kon!"
     p_warn "Baraye nasb-e client-e kharej, token lazem dari."
     echo ""
     p_sep
     echo ""
-    echo -e "  ${BOLD}Gam Baadi (Next Step):${NC}"
-    p_info "Boro sar server-e kharej (Netherlands/Germany/etc)"
-    p_info "Inja ejra kon:  sudo bash setup.sh"
-    p_info "Entekhab kon:   Kharej Client"
-    p_info "URL server:     wss://YOUR-IRAN-DOMAIN/ws  (ya direct IP:PORT)"
-    p_info "Token:          Hamoon chi ke bala save kardi"
+    echo -e "  ${BLUE}${BOLD}Gam Baadi (Next Step):${NC}"
+    echo -e "  ${BLUE}ℹ${NC}  Boro sar server-e kharej (Netherlands/Germany/etc)"
+    echo -e "  ${BLUE}ℹ${NC}  Inja ejra kon:  sudo ./setup.sh"
+    echo -e "  ${BLUE}ℹ${NC}  Entekhab kon:   Kharej Client"
+    echo -e "  ${BLUE}ℹ${NC}  URL server:     wss://YOUR-IRAN-DOMAIN/ws  (ya direct IP:PORT)"
+    echo -e "  ${BLUE}ℹ${NC}  Token:          Hamoon chi ke bala save kardi"
     echo ""
 }
 
@@ -600,7 +600,7 @@ configure_client() {
     fi
     p_sep
     echo ""
-    echo -e "  ${BOLD}1. URL-e Server-e Iran${NC}"
+    echo -e "  ${GREEN}${BOLD}1. URL-e Server-e Iran${NC}"
     p_info "Inja URL-e server-e Iran ro mide. Chand shakl dare:"
     p_info "  wss://tunnel.mysite.com/ws   (ba nginx + SSL)"
     p_info "  ws://1.2.3.4:8443/ws         (direct, bedun-e SSL)"
@@ -617,7 +617,7 @@ configure_client() {
     p_ok "Server URL: ${server_url}"
     p_sep
     echo ""
-    echo -e "  ${BOLD}2. Token-e Amniyati${NC}"
+    echo -e "  ${GREEN}${BOLD}2. Token-e Amniyati${NC}"
     p_info "Hamoon token-i ke dar Iran server nasb kardin."
     p_info "Agar yad dari, az server-e Iran copy kon:"
     p_info "  grep token /etc/ghostwire/server.toml"
@@ -632,7 +632,7 @@ configure_client() {
     p_ok "Token: ${auth_token:0:8}... (accepted)"
     p_sep
     echo ""
-    echo -e "  ${BOLD}3. Auto-Update${NC}"
+    echo -e "  ${GREEN}${BOLD}3. Auto-Update${NC}"
     p_info "GhostWire khodesh az GitHub update mishe."
     p_ask "Auto-update faal bashe? [Y/n]: "
     read -r AU
@@ -646,7 +646,7 @@ configure_client() {
     fi
     p_sep
     echo ""
-    echo -e "  ${BOLD}Kholaseh (Summary):${NC}"
+    echo -e "  ${GREEN}${BOLD}Kholaseh (Summary):${NC}"
     p_info "Server URL: ${server_url}"
     p_info "Token: ${auth_token:0:8}..."
     p_info "Auto-update: ${auto_update}"
@@ -693,7 +693,7 @@ EOF
 install_client() {
     p_sep
     echo ""
-    echo -e "  ${CYAN}${BOLD}🌍  Kharej Client Mode${NC}"
+    echo -e "  ${GREEN}${BOLD}🌍  Kharej Client Mode${NC}"
     echo ""
     p_info "In client BIRUN AZ IRAN nasb mishe."
     p_info "Vazife: Be server-e Iran vasl she, traffic-e Iran ro be internet brigardone."
@@ -715,24 +715,24 @@ install_client() {
     echo ""
     echo -e "  ${GREEN}${BOLD}✓  GhostWire Client dar Kharej nasb shod!${NC}"
     echo ""
-    p_info "Config: /etc/ghostwire/client.toml"
-    p_info "Log file: /var/log/ghostwire-client.log"
+    echo -e "  ${GREEN}ℹ${NC}  Config: /etc/ghostwire/client.toml"
+    echo -e "  ${GREEN}ℹ${NC}  Log file: /var/log/ghostwire-client.log"
     echo ""
-    echo -e "  ${BOLD}Dastorat (Useful Commands):${NC}"
+    echo -e "  ${GREEN}${BOLD}Dastorat (Useful Commands):${NC}"
     echo ""
-    echo -e "  ${CYAN}sudo systemctl status ghostwire-client${NC}   - Status check"
-    echo -e "  ${CYAN}sudo systemctl restart ghostwire-client${NC}  - Restart kone"
-    echo -e "  ${CYAN}sudo systemctl stop ghostwire-client${NC}     - Stop kone"
-    echo -e "  ${CYAN}sudo journalctl -u ghostwire-client -f${NC}   - Live log"
-    echo -e "  ${CYAN}sudo ghostwire-client update${NC}             - Manual update"
+    echo -e "  ${GREEN}sudo systemctl status ghostwire-client${NC}   - Status check"
+    echo -e "  ${GREEN}sudo systemctl restart ghostwire-client${NC}  - Restart kone"
+    echo -e "  ${GREEN}sudo systemctl stop ghostwire-client${NC}     - Stop kone"
+    echo -e "  ${GREEN}sudo journalctl -u ghostwire-client -f${NC}   - Live log"
+    echo -e "  ${GREEN}sudo ghostwire-client update${NC}             - Manual update"
     echo ""
     p_sep
     echo ""
-    echo -e "  ${BOLD}Test Kon (How to test):${NC}"
-    p_info "Boro sar yek mashine darun-e Iran"
-    p_info "Ports-haye tanimsaz-shode (masalan 8080, 8443) ro test kon"
-    p_info "  curl -v http://IRAN_SERVER_IP:8080"
-    p_info "Agar tunel kar mikone, traffic ba internet-e kharej javoqb mide"
+    echo -e "  ${GREEN}${BOLD}Test Kon (How to test):${NC}"
+    echo -e "  ${GREEN}ℹ${NC}  Boro sar yek mashine darun-e Iran"
+    echo -e "  ${GREEN}ℹ${NC}  Ports-haye tanimsaz-shode (masalan 8080, 8443) ro test kon"
+    echo -e "  ${GREEN}ℹ${NC}    curl -v http://IRAN_SERVER_IP:8080"
+    echo -e "  ${GREEN}ℹ${NC}  Agar tunel kar mikone, traffic ba internet-e kharej javoqb mide"
     echo ""
     p_warn "Agar Cloudflare dari: dar /etc/ghostwire/client.toml"
     p_warn "  cloudflare enabled=true set kon baraye paydari bishtar"
