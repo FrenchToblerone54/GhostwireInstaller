@@ -392,7 +392,7 @@ setup_nginx_server() {
     p_info "Fayde-ha: TLS/HTTPS, domain name, security bishtar."
     p_info "Agar domain nadari ya direct mikhai, skip kon."
     echo ""
-    p_ask "Nginx ro hazir koni? [y/N]: "
+    p_ask "Nginx ro setup koni? [y/N]: "
     read -r -n 1 REPLY
     echo ""
     if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
@@ -428,7 +428,7 @@ EOF
     nginx -t && systemctl reload nginx
     p_ok "Nginx config aval sakhte shod."
     echo ""
-    p_ask "TLS certificate ba Let's Encrypt begiri? [y/N]: "
+    p_ask "TLS certificate ba Let's Encrypt begirim? [y/N]: "
     read -r -n 1 TLS_REPLY
     echo ""
     if [[ "$TLS_REPLY" =~ ^[Yy]$ ]]; then
@@ -481,7 +481,7 @@ EOF
     PANEL_ENABLED_CHECK=$(grep "^enabled=true" /etc/ghostwire/server.toml 2>/dev/null | head -1 || true)
     if [ -n "$PANEL_ENABLED_CHECK" ]; then
         echo ""
-        p_ask "Baraye panel ham yek domain joda mikhahi? [y/N]: "
+        p_ask "Baraye panel ham yek domain-e joda mikhai? [y/N]: "
         read -r -n 1 PANEL_DOMAIN_REPLY
         echo ""
         if [[ "$PANEL_DOMAIN_REPLY" =~ ^[Yy]$ ]]; then
@@ -501,7 +501,7 @@ server {
 EOF
             ln -sf /etc/nginx/sites-available/ghostwire-panel /etc/nginx/sites-enabled/
             nginx -t && systemctl reload nginx
-            p_ask "TLS baraye panel domain? [y/N]: "
+            p_ask "TLS baraye domain-e panel? [y/N]: "
             read -r -n 1 PANEL_TLS
             echo ""
             [[ "$PANEL_TLS" =~ ^[Yy]$ ]] && certbot --nginx -d "$PANEL_DOMAIN"
