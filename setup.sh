@@ -595,7 +595,7 @@ configure_client() {
     p_step "Tanzim-ate client (Client configuration)"
     if [ -f /etc/ghostwire/client.toml ]; then
         p_warn "Config ghablan vojod dasht: /etc/ghostwire/client.toml"
-        p_warn "Jadid nasazi - haman config ro negah midim."
+        p_warn "Jadid nasazi - haman config ro negah midarim."
         return
     fi
     p_sep
