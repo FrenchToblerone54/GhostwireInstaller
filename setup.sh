@@ -254,8 +254,8 @@ configure_server() {
     p_sep
     echo -e "  ${BLUE}${BOLD}1. WebSocket Port - Dar-e Voroodi${NC}"
     p_info "Kharej server az in port be Iran vasl mishe."
-    p_info "Agar nginx doshti: host = 127.0.0.1 (default, amniyat bishtar)"
-    p_info "Agar nginx nadori: host = 0.0.0.0 (direct connection)"
+    p_info "Agar nginx mikhay nasb koni: host = 127.0.0.1 (default, amniyat bishtar)"
+    p_info "Agar nginx nemikhay nasb koni: host = 0.0.0.0 (direct connection)"
     echo ""
     p_ask "WebSocket listen host [127.0.0.1]: "
     read -r WS_HOST
