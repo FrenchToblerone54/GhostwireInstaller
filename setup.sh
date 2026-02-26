@@ -88,12 +88,12 @@ check_prerequisites() {
     fi
     p_ok "Root access: OK"
     if [ "$(uname -m)" != "x86_64" ]; then
-        p_err "Faqat x86_64 (64-bit) support mishe! (Only x86_64 is supported.)"
+        p_err "Faghat x86_64 (64-bit) support mishe! (Only x86_64 is supported.)"
         exit 1
     fi
     p_ok "CPU: x86_64 - OK"
     if [ "$(uname -s)" != "Linux" ]; then
-        p_err "Faqat Linux support mishe!"
+        p_err "Faghat Linux support mishe!"
         exit 1
     fi
     p_ok "OS: Linux - OK"
@@ -159,7 +159,7 @@ ask_location() {
     echo ""
     echo -e "  ${BLUE}${BOLD}1)${NC}  🇮🇷  ${BLUE}${BOLD}Iran Server${NC}"
     echo -e "       ${DIM}Server darun-e Iran - port-ha ro listen mikone${NC}"
-    echo -e "       ${DIM}GhostWire inja nasb mishe va dar-e varoodi ro baz negah midare${NC}"
+    echo -e "       ${DIM}GhostWire inja nasb mishe va dar-e voroodi ro baz negah midare${NC}"
     echo ""
     echo -e "  ${GREEN}${BOLD}2)${NC}  🌍  ${GREEN}${BOLD}Kharej Client (Abroad)${NC}"
     echo -e "       ${DIM}Server birun az Iran - be Iran vasl mishe, internet ro forward mikone${NC}"
@@ -252,7 +252,7 @@ configure_server() {
     token=$(/usr/local/bin/ghostwire-server --generate-token)
     echo ""
     p_sep
-    echo -e "  ${BLUE}${BOLD}1. WebSocket Port - Dar-e Varoodi${NC}"
+    echo -e "  ${BLUE}${BOLD}1. WebSocket Port - Dar-e Voroodi${NC}"
     p_info "Kharej server az in port be Iran vasl mishe."
     p_info "Agar nginx doshti: host = 127.0.0.1 (default, amniyat bishtar)"
     p_info "Agar nginx nadori: host = 0.0.0.0 (direct connection)"
@@ -267,10 +267,10 @@ configure_server() {
     p_sep
     echo ""
     echo -e "  ${BLUE}${BOLD}2. Port Mapping - Che Port-hai Forward Beshe?${NC}"
-    p_info "Misali: 8080=80   =>  Iran:8080 traffic ro be internet port 80 miresone"
-    p_info "Misali: 8443=443  =>  Iran:8443 traffic ro be internet port 443 miresone"
-    p_info "Misali: 8000-8100=80  =>  Port range forwarding"
-    p_info "Misali: 9000=1.2.3.4:443  =>  Be yek IP-e khas forward kone"
+    p_info "Masalan: 8080=80   =>  Iran:8080 traffic ro be internet port 80 miresone"
+    p_info "Masalan: 8443=443  =>  Iran:8443 traffic ro be internet port 443 miresone"
+    p_info "Masalan: 8000-8100=80  =>  Port range forwarding"
+    p_info "Masalan: 9000=1.2.3.4:443  =>  Be yek IP-e khas forward kone"
     echo ""
     p_info "Agar proxy (like V2Ray, Xray) dar kharej dari:"
     p_info "  oon proxy-e kharej port X ro listen mikone"
@@ -302,7 +302,7 @@ configure_server() {
     fi
     p_sep
     echo ""
-    echo -e "  ${BLUE}${BOLD}4. Web Panel - Pane-le Modiriyat${NC}"
+    echo -e "  ${BLUE}${BOLD}4. Web Panel - Panel-e Modiriyat${NC}"
     p_info "Yek interface grafiki baraye monitoring, log va control-e service."
     p_info "Amniyat: Faghat az localhost qabel-e dastres ast (baraye nginx proxy)."
     p_ask "Panel ro faal koni? [Y/n]: "
