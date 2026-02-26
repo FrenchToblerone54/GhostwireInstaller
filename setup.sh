@@ -711,6 +711,15 @@ install_client() {
     p_info "Client khodesh vasl mishe - Iran block nemikone chon inbound-e."
     echo ""
     p_sep
+    p_sep
+    echo ""
+    echo -e "  ${YELLOW}${BOLD}⚠  Qabl az nasb: Ertebat-e server-e Iran ro check kon!${NC}"
+    p_info "Az in server-e kharej, aval in dastor ro ejra kon ta bebini vasl-e ya na:"
+    p_info "  curl -v https://DOMAIN-YA-IP-SERVER-IRAN/ws"
+    p_info "Agar error ya timeout gereft:"
+    p_info "  - Shayad dar config-e server, host ro 127.0.0.1 bezari vali nginx dorost setup nashe"
+    p_info "  - Nginx config ro check kon - bayad /ws ro be GhostWire proxy kone"
+    echo ""
     p_step "Gam 1: Daryaft va Nasb-e Binary (Step 1: Download & Install)"
     download_binary "ghostwire-client"
     p_step "Gam 2: Tanzim-e Config (Step 2: Configure)"

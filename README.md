@@ -4,6 +4,10 @@
 
 A friendly, step-by-step installer for [GhostWire](https://github.com/FrenchToblerone54/Ghostwire) — an anti-censorship reverse tunnel system. The script auto-detects whether you are in Iran or abroad and walks you through the correct setup with clear explanations at every step.
 
+## Demo Video
+
+[![GhostWire Installation Demo](https://img.youtube.com/vi/t4lfe7dBP_c/maxresdefault.jpg)](https://youtu.be/t4lfe7dBP_c)
+
 ---
 
 ## What is GhostWire?
@@ -80,6 +84,8 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 | Auto-update    | `Y`                | GhostWire checks GitHub for updates and restarts itself                                                    |
 | Web panel      | `Y`                | Browser-based dashboard for monitoring and control                                                         |
 
+> **Security tip:** Keep **Auto-update enabled** (`Y`) in the configuration. GhostWire receives security patches automatically — disabling it means you must manually update to stay protected.
+
 **Port mapping examples:**
 
 ```
@@ -102,6 +108,18 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 ---
 
 ## After Installation
+
+### Verify the connection first
+
+Before setting up the abroad client, run this from your **abroad server** to confirm the Iran server's WebSocket endpoint is reachable:
+
+```bash
+curl -v https://YOUR-IRAN-DOMAIN/ws
+```
+
+If it fails (connection refused, 502, timeout), check:
+- If `listen_host` is `127.0.0.1` in `server.toml`, nginx must be correctly set up to proxy `/ws` — a failure here usually means nginx was misconfigured
+- If using direct mode (`0.0.0.0`), ensure the port is open in your firewall
 
 ### Useful commands
 
