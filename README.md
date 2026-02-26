@@ -45,7 +45,7 @@ sudo ./setup.sh
 The script detects your location, confirms you want **Iran Server** mode, then walks you through:
 
 1. Downloading and verifying the GhostWire server binary
-2. Configuring WebSocket port, port mappings, auto-update, and optional web panel
+2. Configuring WebSocket port, port mappings, WebSocket pool size, auto-update, and optional web panel
 3. Installing a systemd service so GhostWire starts automatically
 4. Optional nginx reverse proxy with Let's Encrypt TLS
 
@@ -76,6 +76,7 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 | WebSocket host | `127.0.0.1`        | Use `127.0.0.1` if using nginx (recommended). Use `0.0.0.0` for direct connections.                        |
 | WebSocket port | `8443`             | Port the abroad client connects to                                                                         |
 | Port mappings  | `8080=80,8443=443` | `IRAN_PORT=INTERNET_PORT` — traffic arriving on IRAN_PORT is forwarded to INTERNET_PORT on the abroad side |
+| ws_pool_children | `8`              | Number of worker processes handling connections — recommended: 4× your simultaneous user count             |
 | Auto-update    | `Y`                | GhostWire checks GitHub for updates and restarts itself                                                    |
 | Web panel      | `Y`                | Browser-based dashboard for monitoring and control                                                         |
 
