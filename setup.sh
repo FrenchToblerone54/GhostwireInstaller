@@ -755,7 +755,7 @@ main() {
         install_client
     fi
     echo ""
-    echo -e "  ${GREEN}${BOLD}Kheyr! Movafagh bashi! 🎉${NC}"
+    echo -e "  ${GREEN}${BOLD}Movafagh bashi! 🎉${NC}"
     echo ""
 }
 
