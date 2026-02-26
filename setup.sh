@@ -331,6 +331,16 @@ path=\"${PANEL_PATH}\"
 threads=4"
         p_ok "Panel: http://${PANEL_HOST}:${PANEL_PORT}/${PANEL_PATH}/"
     fi
+    p_sep
+    echo ""
+    echo -e "  ${BLUE}${BOLD}5. WebSocket Pool - Pool-e Ertebat${NC}"
+    p_info "Tedat-e process-hayi ke connection-ha ro handle mikonan."
+    p_info "Bishtar = performance bishtar, vali RAM bishtar mikhore."
+    p_info "Pishnahad: 4 barabar-e tedat-e user-hayi ke ham-zaman vasl mishan"
+    p_ask "ws_pool_children [8]: "
+    read -r WS_POOL_CHILDREN
+    WS_POOL_CHILDREN="${WS_POOL_CHILDREN:-8}"
+    p_ok "ws_pool_children: ${WS_POOL_CHILDREN}"
     local TUNNEL_ARRAY
     TUNNEL_ARRAY=$(printf ',"%s"' "${TUNNELS[@]}")
     TUNNEL_ARRAY="[${TUNNEL_ARRAY:1}]"
@@ -338,6 +348,7 @@ threads=4"
     echo ""
     echo -e "  ${BLUE}${BOLD}Kholaseh-ye Config (Summary):${NC}"
     p_info "WebSocket: ${WS_HOST}:${WS_PORT}"
+    p_info "ws_pool_children: ${WS_POOL_CHILDREN}"
     p_info "Tunnels: ${TUNNEL_ARRAY}"
     p_info "Auto-update: ${AUTO_UPDATE}"
     [ "$PANEL_ENABLED" = "true" ] && p_info "Panel: http://${PANEL_HOST}:${PANEL_PORT}/${PANEL_PATH}/"
@@ -360,7 +371,7 @@ websocket_path="/ws"
 ping_interval=30
 ping_timeout=60
 ws_pool_enabled=true
-ws_pool_children=8
+ws_pool_children=${WS_POOL_CHILDREN}
 ws_pool_min=2
 ws_pool_stripe=false
 udp_enabled=true
