@@ -243,7 +243,7 @@ configure_server() {
     p_step "Tanzim-ate server (Server configuration)"
     if [ -f /etc/ghostwire/server.toml ]; then
         p_warn "Config ghablan vojod dasht: /etc/ghostwire/server.toml"
-        p_warn "Jadid nasazi - haman config ro negah midim."
+        p_warn "Jadid nasazi - haman config ro negah midarim."
         return
     fi
     p_info "GhostWire yek token rand (tasadofi) mikhad baraye amniyat."
