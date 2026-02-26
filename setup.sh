@@ -736,6 +736,8 @@ install_client() {
     echo ""
     p_warn "Agar Cloudflare dari: dar /etc/ghostwire/client.toml"
     p_warn "  cloudflare enabled=true set kon baraye paydari bishtar"
+    p_warn "Agar server-e kharej nemitune be server-e Iran ping/curl kone:"
+    p_warn "  Cloudflare Proxy ro enable kon va SSL/TLS mode ro Full (strict) bezar"
     echo ""
 }
 
