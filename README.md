@@ -117,6 +117,9 @@ Before setting up the abroad client, run this from your **abroad server** to con
 curl -v https://YOUR-IRAN-DOMAIN/ws
 ```
 
+> [!TIP]
+> If curl fails, try enabling [Cloudflare proxy](#cloudflare-tips) on your domain and retry after a few minutes for DNS to propagate.
+
 If it fails (connection refused, 502, timeout), check:
 - If `listen_host` is `127.0.0.1` in `server.toml`, nginx must be correctly set up to proxy `/ws` — a failure here usually means nginx was misconfigured
 - If using direct mode (`0.0.0.0`), ensure the port is open in your firewall
