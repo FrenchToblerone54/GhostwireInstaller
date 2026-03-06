@@ -266,29 +266,52 @@ configure_server() {
     p_ok "WebSocket: ${WS_HOST}:${WS_PORT}"
     p_sep
     echo ""
-    echo -e "  ${BLUE}${BOLD}2. Port Mapping - Che Port-hai Forward Beshe?${NC}"
-    p_info "Masalan: 8080=80   =>  Iran:8080 traffic ro be internet port 80 miresone"
-    p_info "Masalan: 8443=443  =>  Iran:8443 traffic ro be internet port 443 miresone"
-    p_info "Masalan: 8000-8100=80  =>  Port range forwarding"
-    p_info "Masalan: 9000=1.2.3.4:443  =>  Be yek IP-e khas forward kone"
-    echo ""
-    p_info "Agar proxy (like V2Ray, Xray) dar kharej dari:"
-    p_info "  oon proxy-e kharej port X ro listen mikone"
-    p_info "  Inja bezan: 443=X  (Iran 443 → kharej port X)"
-    echo ""
-    local tunnel_input=""
+    echo -e "  ${BLUE}${BOLD}2. Tunnel Mode${NC}"
+    p_info "reverse = pishfarz (server listener dar Iran, client birun vasl mishe)"
+    p_info "direct = client listener, port mapping ro client define mikone"
+    local GW_MODE=""
     while true; do
-        p_ask "Port mapping-ha (ba comma joda kon) [8080=80,8443=443]: "
-        read -r tunnel_input
-        tunnel_input="${tunnel_input:-8080=80,8443=443}"
-        [ -n "$tunnel_input" ] && break
-        p_err "In ghesmat lazem-e!"
+        p_ask "Mode [1=reverse, 2=direct] (default: 1): "
+        read -r GW_MODE
+        GW_MODE="${GW_MODE:-1}"
+        case "$GW_MODE" in
+            "1") GW_MODE="reverse"; break ;;
+            "2") GW_MODE="direct"; break ;;
+            *) p_err "Lotfan 1 ya 2 bezan!" ;;
+        esac
     done
-    IFS="," read -ra TUNNELS <<< "$tunnel_input"
-    TUNNELS=("${TUNNELS[@]// /}")
+    p_ok "mode: ${GW_MODE}"
     p_sep
     echo ""
-    echo -e "  ${BLUE}${BOLD}3. Auto-Update - Be-roozresani Khodkar${NC}"
+    echo -e "  ${BLUE}${BOLD}3. Port Mapping - Che Port-hai Forward Beshe?${NC}"
+    local TUNNELS=()
+    if [ "$GW_MODE" = "reverse" ]; then
+        p_info "In mode server listener hast, pas mapping-ha ro inja bezan."
+        p_info "Masalan: 8080=80   =>  Iran:8080 traffic ro be internet port 80 miresone"
+        p_info "Masalan: 8443=443  =>  Iran:8443 traffic ro be internet port 443 miresone"
+        p_info "Masalan: 8000-8100=80  =>  Port range forwarding"
+        p_info "Masalan: 9000=1.2.3.4:443  =>  Be yek IP-e khas forward kone"
+        echo ""
+        p_info "Agar proxy (like V2Ray, Xray) dar kharej dari:"
+        p_info "  oon proxy-e kharej port X ro listen mikone"
+        p_info "  Inja bezan: 443=X  (Iran 443 → kharej port X)"
+        echo ""
+        local tunnel_input=""
+        while true; do
+            p_ask "Port mapping-ha (ba comma joda kon) [8080=80,8443=443]: "
+            read -r tunnel_input
+            tunnel_input="${tunnel_input:-8080=80,8443=443}"
+            [ -n "$tunnel_input" ] && break
+            p_err "In ghesmat lazem-e!"
+        done
+        IFS="," read -ra TUNNELS <<< "$tunnel_input"
+        TUNNELS=("${TUNNELS[@]// /}")
+    else
+        p_info "In mode server listener nist, mapping server lazem nist."
+    fi
+    p_sep
+    echo ""
+    echo -e "  ${BLUE}${BOLD}4. Auto-Update - Be-roozresani Khodkar${NC}"
     p_info "GhostWire az GitHub jadid-tarinha ro check mikone va khodesh update mishe."
     p_ask "Auto-update ro faal koni? [Y/n]: "
     read -r AUTO_UPDATE
@@ -302,7 +325,7 @@ configure_server() {
     fi
     p_sep
     echo ""
-    echo -e "  ${BLUE}${BOLD}4. Web Panel - Panel-e Modiriyat${NC}"
+    echo -e "  ${BLUE}${BOLD}5. Web Panel - Panel-e Modiriyat${NC}"
     p_info "Yek interface grafiki baraye monitoring, log va control-e service."
     p_info "Amniyat: Faghat az localhost qabel-e dastres ast (baraye nginx proxy)."
     p_ask "Panel ro faal koni? [Y/n]: "
@@ -333,7 +356,7 @@ threads=4"
     fi
     p_sep
     echo ""
-    echo -e "  ${BLUE}${BOLD}5. WebSocket Pool - Pool-e Ertebat${NC}"
+    echo -e "  ${BLUE}${BOLD}6. WebSocket Pool - Pool-e Ertebat${NC}"
     p_info "Tedat-e process-hayi ke connection-ha ro handle mikonan."
     p_info "Bishtar = performance bishtar, vali RAM bishtar mikhore."
     p_info "Pishnahad: 4 barabar-e tedat-e user-hayi ke ham-zaman vasl mishan"
@@ -348,6 +371,7 @@ threads=4"
     echo ""
     echo -e "  ${BLUE}${BOLD}Kholaseh-ye Config (Summary):${NC}"
     p_info "WebSocket: ${WS_HOST}:${WS_PORT}"
+    p_info "mode: ${GW_MODE}"
     p_info "ws_pool_children: ${WS_POOL_CHILDREN}"
     p_info "Tunnels: ${TUNNEL_ARRAY}"
     p_info "Auto-update: ${AUTO_UPDATE}"
@@ -366,6 +390,7 @@ threads=4"
 protocol="websocket"
 listen_host="${WS_HOST}"
 listen_port=${WS_PORT}
+mode="${GW_MODE}"
 listen_backlog=4096
 websocket_path="/ws"
 ping_interval=30
@@ -643,7 +668,46 @@ configure_client() {
     p_ok "Token: ${auth_token:0:8}... (accepted)"
     p_sep
     echo ""
-    echo -e "  ${GREEN}${BOLD}3. Auto-Update${NC}"
+    echo -e "  ${GREEN}${BOLD}3. Tunnel Mode${NC}"
+    p_info "Bayad ba mode server yeksan bashe."
+    local GW_MODE=""
+    while true; do
+        p_ask "Mode [1=reverse, 2=direct] (default: 1): "
+        read -r GW_MODE
+        GW_MODE="${GW_MODE:-1}"
+        case "$GW_MODE" in
+            "1") GW_MODE="reverse"; break ;;
+            "2") GW_MODE="direct"; break ;;
+            *) p_err "Lotfan 1 ya 2 bezan!" ;;
+        esac
+    done
+    p_ok "mode: ${GW_MODE}"
+    p_sep
+    echo ""
+    echo -e "  ${GREEN}${BOLD}4. Port Mapping${NC}"
+    local TUNNELS=()
+    if [ "$GW_MODE" = "direct" ]; then
+        p_info "In mode client listener hast, pas mapping-ha ro inja bezan."
+        p_info "Masalan: 8080=80,8443=443"
+        local tunnel_input=""
+        while true; do
+            p_ask "Port mapping-ha (ba comma joda kon) [8080=80,8443=443]: "
+            read -r tunnel_input
+            tunnel_input="${tunnel_input:-8080=80,8443=443}"
+            [ -n "$tunnel_input" ] && break
+            p_err "In ghesmat lazem-e!"
+        done
+        IFS="," read -ra TUNNELS <<< "$tunnel_input"
+        TUNNELS=("${TUNNELS[@]// /}")
+    else
+        p_info "In mode client listener nist, mapping client lazem nist."
+    fi
+    local TUNNEL_ARRAY
+    TUNNEL_ARRAY=$(printf ',"%s"' "${TUNNELS[@]}")
+    TUNNEL_ARRAY="[${TUNNEL_ARRAY:1}]"
+    p_sep
+    echo ""
+    echo -e "  ${GREEN}${BOLD}5. Auto-Update${NC}"
     p_info "GhostWire khodesh az GitHub update mishe."
     p_ask "Auto-update faal bashe? [Y/n]: "
     read -r AU
@@ -659,6 +723,8 @@ configure_client() {
     echo ""
     echo -e "  ${GREEN}${BOLD}Kholaseh (Summary):${NC}"
     p_info "Server URL: ${server_url}"
+    p_info "mode: ${GW_MODE}"
+    p_info "Tunnels: ${TUNNEL_ARRAY}"
     p_info "Token: ${auth_token:0:8}..."
     p_info "Auto-update: ${auto_update}"
     echo ""
@@ -675,6 +741,7 @@ configure_client() {
 protocol="websocket"
 url="${server_url}"
 token="${auth_token}"
+mode="${GW_MODE}"
 ping_interval=30
 ping_timeout=60
 ws_send_batch_bytes=65536
@@ -693,6 +760,9 @@ ips=[]
 host=""
 check_interval=300
 max_connection_time=1740
+
+[tunnels]
+ports=${TUNNEL_ARRAY}
 
 [logging]
 level="info"

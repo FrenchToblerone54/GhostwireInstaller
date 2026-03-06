@@ -49,7 +49,7 @@ sudo ./setup.sh
 The script detects your location, confirms you want **Iran Server** mode, then walks you through:
 
 1. Downloading and verifying the GhostWire server binary
-2. Configuring WebSocket port, port mappings, WebSocket pool size, auto-update, and optional web panel
+2. Configuring WebSocket port, tunnel mode (`reverse` or `direct`), port mappings on the listener side, WebSocket pool size, auto-update, and optional web panel
 3. Installing a systemd service so GhostWire starts automatically
 4. Optional nginx reverse proxy with Let's Encrypt TLS
 
@@ -68,7 +68,7 @@ sudo ./setup.sh
 The script detects your location, confirms you want **Abroad Client** mode, then walks you through:
 
 1. Downloading and verifying the GhostWire client binary
-2. Entering the Iran server URL and authentication token
+2. Entering the Iran server URL and authentication token, and matching tunnel mode settings
 3. Installing a systemd service
 
 ---
@@ -79,7 +79,8 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 | -------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
 | WebSocket host | `127.0.0.1`        | Use `127.0.0.1` if using nginx (recommended). Use `0.0.0.0` for direct connections.                        |
 | WebSocket port | `8443`             | Port the abroad client connects to                                                                         |
-| Port mappings  | `8080=80,8443=443` | `IRAN_PORT=INTERNET_PORT` — traffic arriving on IRAN_PORT is forwarded to INTERNET_PORT on the abroad side |
+| Tunnel mode    | `reverse`          | `reverse` (default) or `direct`                                                                            |
+| Port mappings  | `8080=80,8443=443` | Asked only when server is listener (`reverse`)                                                              |
 | ws_pool_children | `8`              | Number of worker processes handling connections — recommended: 4× your simultaneous user count             |
 | Auto-update    | `Y`                | GhostWire checks GitHub for updates and restarts itself                                                    |
 | Web panel      | `Y`                | Browser-based dashboard for monitoring and control                                                         |
@@ -103,7 +104,30 @@ The script detects your location, confirms you want **Abroad Client** mode, then
 | ----------- | ------------------------------------------------------------------------------------- |
 | Server URL  | URL of your Iran server, e.g. `wss://tunnel.example.com/ws` or `ws://1.2.3.4:8443/ws` |
 | Token       | The token saved from the Iran server installation                                     |
+| Tunnel mode | Must match server: `reverse` or `direct`                                              |
+| Port mappings | Asked only when client is listener (`direct`)                                       |
 | Auto-update | Same as server — recommended to keep enabled                                          |
+
+---
+
+## Mode Guide (Which Option for What?)
+
+- Host a website on your own computer (client side) and expose it from server to WWW:
+- Choose `mode=reverse`, then configure mappings on the **server** installer side.
+
+- Connect to a VPN running on the server side, securely over GhostWire tunnel encryption:
+- Choose `mode=direct`, then configure mappings on the **client** installer side.
+
+- Default behavior: `reverse` (recommended default and still supported).
+
+WS pool works in direct modes as well when using WebSocket transport.
+
+For direct mode egress proxying, set these on server config (`/etc/ghostwire/server.toml`):
+
+```toml
+direct_http_proxy="http://127.0.0.1:8080"
+direct_https_proxy="http://127.0.0.1:8080"
+```
 
 ---
 
